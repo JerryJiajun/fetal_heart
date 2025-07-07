@@ -81,16 +81,10 @@ loaded via a namespace (and not attached):
 
 
 # instruction for multiomics data demonstration and visualization
-# load the required packages
-library(Seurat)
-library(ggplot2)
-library(patchwork)
-library(Signac)
-library(EnsDb.Hsapiens.v86)
-library(BSgenome.Hsapiens.UCSC.hg38)
-library(dplyr)
-
-# load the data
+put the raw data to the folder fetal_heart_multiomics
+load the dependent libraries and run the R code under that folder
+and below is the general plot function to demonstrate the clustering
+# or you can load the saved rds file
 fetal_heart <- readRDS("fetal_heart_multiomics_annotated.rds")
 levels(fetal_heart) <- c('VCM','VSM','SMC','SAN','RBC','Neuronal','Myeloid','Lymphoid','Fibroblast','Epithelial','Epicardial','Endothelial','ACM')
 
@@ -118,20 +112,13 @@ DefaultAssay(fetal_heart) <-'peaks'
 levels(fetal_heart) <- c('VCM','VSM','SMC','SAN','RBC','Neuronal','Myeloid','Lymphoid','Fibroblast','Epithelial','Epicardial','Endothelial','ACM')
 CoveragePlot(fetal_heart, region = "TBX5",features = "TBX5",annotation = TRUE,peaks = FALSE, pextend.upstream = 2000, extend.downstream = 2000)
 
-            
-
 
 # instruction for spatial data demonstration and visualization
+put the raw data to the folder fetal_heart_spatial
+load the dependent libraries and run the R code under that folder
+and below is the general plot function to demonstrate the clustering
+# or you can load the saved rds file
 
-# load the required packages
-library(Seurat)
-library(ggplot2)
-library(patchwork)
-library(dplyr)
-library(hdf5r)
-library(CellChat)
-
-# load the data
 fetal_heart <- readRDS("fetal_heart_normal_spatial_annotated(006).rds")
 
 # UMAP demonstrate different cell populations
@@ -156,3 +143,65 @@ VlnPlot(fetal_heart,features = c("SHOX2"),pt.size = 0.5) + labs(x = '')
 
 # Dot plot showing the expression of indicated gene
 DotPlot(fetal_heart,features = c("SHOX2")) + RotatedAxis() + labs(x = '',y = '')
+
+
+# instruction for Sinoid data demonstration and visualization
+put the raw data to the folder Sinoid
+load the dependent libraries and run the R code under that folder
+and below is the general plot function to demonstrate the clustering
+# or you can load the saved rds file
+Sinoid <- readRDS("Sinoid_annotated.rds")
+levels(Sinoid) <- c("SAN","Proliferating","Neuronal","Epithelial","Epicardial","Endothelial")
+
+# UMAP demonstrate different cell populations based on RNA expression
+# show in the default page
+UMAPPlot(Sinoid,label=TRUE,label.size =5,repel = TRUE) + labs(x = 'UMAP_1', y = 'UMAP_2')
+
+# dotplot demonstrate the marker expression of each cell population
+# show in the default page
+DotPlot(Sinoid,features = c("HCN4","TOP2A","STMN2","EPCAM","WT1","CDH5")) + RotatedAxis() + labs(x = '',y = '')
+
+# Violin plot showing the expression of indicated gene
+# show after type in the search gene 
+VlnPlot(Sinoid,features = "HCN4",pt.size = 0.5) + labs(x = '')
+
+# UMAP to demonstrate the expression of selected gene
+# show after type in the search gene 
+FeaturePlot(Sinoid,features = "HCN4") + labs(x = 'UMAP_1',y = "UMAP_2")
+
+# Dotplot to demonstrate the expression of selected gene
+# show after type in the search gene 
+DotPlot(Sinoid,features = "HCN4") + labs(x = 'UMAP_1', y = 'UMAP_2')
+
+
+
+# instruction for SAN-PCO data demonstration and visualization
+put the raw data to the folder SAN_PCO
+load the dependent libraries and run the R code under that folder
+and below is the general plot function to demonstrate the clustering
+# or you can load the saved rds file
+# load the data
+SAN_PCO <- readRDS("Combine_annotated.rds")
+levels(SAN_PCO) <- c("SAN","Proliferating","Neuronal","Myofibroblasts","Mesenchymal","Epithelial","Endothelial","CM")
+
+# UMAP demonstrate different cell populations based on RNA expression
+# show in the default page
+UMAPPlot(SAN_PCO,label=TRUE,label.size = 4, repel = TRUE) + labs(x = "UMAP_1",y = "UMAP_2")
+
+# dotplot demonstrate the marker expression of each cell population
+# show in the default page
+DotPlot(SAN_PCO,features = c("HCN4","TOP2A","STMN2","COL1A1","ZFHX4","EPCAM","PECAM1","MYH7")) + RotatedAxis() + labs(x = "",y = "")
+
+
+# Violin plot showing the expression of indicated gene
+# show after type in the search gene 
+VlnPlot(SAN_PCO,features = "STMN2",pt.size = 0.5) + labs(x = "")
+
+# UMAP to demonstrate the expression of selected gene
+# show after type in the search gene 
+FeaturePlot(SAN_PCO,features = "STMN2") + labs(x = "UMAP_1",y = "UMAP_2")
+
+# Dotplot to demonstrate the expression of selected gene
+# show after type in the search gene 
+DotPlot(SAN_PCO,features = "STMN2") + labs(x = "",y = "")
+
